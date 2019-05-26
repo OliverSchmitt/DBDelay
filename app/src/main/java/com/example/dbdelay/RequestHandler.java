@@ -1,5 +1,6 @@
 package com.example.dbdelay;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,8 +24,12 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RequestHandler extends BroadcastReceiver {
     private static final String TAG = "RequestHandler";
@@ -40,7 +45,7 @@ public class RequestHandler extends BroadcastReceiver {
         // Request response
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
-                    ArrayList<String> keywords = new ArrayList<String>(Arrays.asList("Heidelberg", "Karlsruhe", "Niederlande", "Berlin"));
+                    ArrayList<String> keywords = new ArrayList<String>(Arrays.asList("Heidelberg", "Karlsruhe", "Niederlande"));
 
                     private boolean isRelevant(Element article) {
                         for(String keyword : keywords)
@@ -70,6 +75,11 @@ public class RequestHandler extends BroadcastReceiver {
                             }
                         }
 
+
+                        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                        Date date = new Date();
+//                        System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+
                         // Create the notification
                         String CHANNEL_ID = MainActivity.getChannelId();
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
@@ -77,7 +87,7 @@ public class RequestHandler extends BroadcastReceiver {
                                 .setContentTitle(doc.title())
                                 .setContentText(contentText.toString().substring(0, 50))
                                 .setStyle(new NotificationCompat.BigTextStyle()
-                                        .bigText(contentText.toString()))
+                                        .bigText(contentText.toString() + "\n\n" + dateFormat.format(date)))
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
                         // Send the notification

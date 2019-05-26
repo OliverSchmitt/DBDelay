@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     // Point in time
     private Calendar calendar;
     private static final int HOUR_OF_DAY = 5;
-    private static final int MINUTE = 0;
+    private static final int MINUTE = 23;
     private static final int SECOND = 0;
 
     // Notification channel id
@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, HOUR_OF_DAY);
-        calendar.set(Calendar.MINUTE, MINUTE);
-        calendar.set(Calendar.SECOND, SECOND);
+//        calendar.set(Calendar.MINUTE, MINUTE);
+//        calendar.set(Calendar.SECOND, SECOND);
 
         // Create the intent to perform
         Intent intent = new Intent(this, RequestHandler.class);
