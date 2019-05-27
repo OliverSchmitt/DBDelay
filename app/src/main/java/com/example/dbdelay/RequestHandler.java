@@ -45,7 +45,13 @@ public class RequestHandler extends BroadcastReceiver {
         // Request response
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
-                    ArrayList<String> keywords = new ArrayList<String>(Arrays.asList("Heidelberg", "Karlsruhe", "Niederlande"));
+                    private static final String CLASS = "incident";
+
+                    ArrayList<String> keywords = new ArrayList<>(Arrays.asList("Heidelberg",
+                            "Kirchheim", "Rohrbach", "St. Ilgen", "Sankt Ilgen", "Sandhausen",
+                            "Wiesloch", "Walldorf", "Rot", "St. Leon", "Sankt Leon", "Malsch",
+                            "Bad Schönborn", "Bad Schoenborn", "Kronau", "Ubstadt-Weiher",
+                            "Bruchsal", "Karlsruhe", "Bayern"));
 
                     private boolean isRelevant(Element article) {
                         for(String keyword : keywords)
@@ -64,21 +70,20 @@ public class RequestHandler extends BroadcastReceiver {
 
                         // Parse response
                         Document doc = Jsoup.parse(fixEncodingUnicode(response));
-                        ArrayList<Element> articles = doc.getElementsByClass("incident");
+                        ArrayList<Element> articles = doc.getElementsByClass(CLASS);
 
                         // Filter articles
                         StringBuilder contentText = new StringBuilder();
                         for(Element article : articles) {
-                            String text = article.text();
                             if(isRelevant(article)) {
+                                String text = article.text();
                                 contentText.append(text.substring(0, 80)).append("\n\n");
                             }
                         }
 
-
-                        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                        Date date = new Date();
-//                        System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+                        DateFormat dateFormat = DateFormat.getDateTimeInstance();
+                        Calendar calendar = Calendar.getInstance();
+                        Log.d(TAG, "onResponse: " + dateFormat.format(calendar.getTime()));
 
                         // Create the notification
                         String CHANNEL_ID = MainActivity.getChannelId();
@@ -87,7 +92,7 @@ public class RequestHandler extends BroadcastReceiver {
                                 .setContentTitle(doc.title())
                                 .setContentText(contentText.toString().substring(0, 50))
                                 .setStyle(new NotificationCompat.BigTextStyle()
-                                        .bigText(contentText.toString() + "\n\n" + dateFormat.format(date)))
+                                        .bigText(contentText.toString()))
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
                         // Send the notification
