@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.text.DateFormat;
 
 public class MainActivity extends AppCompatActivity {
     // Logging tag
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent checkIntent;
 
     TextView textView;
+    TextView indicator;
 
     private void createNotificationChannel() {
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "DBDelay",
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate: Create");
 
         createNotificationChannel();
         createTimePoint();
@@ -77,16 +80,17 @@ public class MainActivity extends AppCompatActivity {
         Button startButton = findViewById(R.id.startButton);
         Button stopButton = findViewById(R.id.stopButton);
 
+        // Create text and indicator
         boolean checkIsActive = checkIsActive();
-
         textView = findViewById(R.id.textView);
-        textView.setText(getString(R.string.isActive, (checkIsActive) ? "" : "not "));
+        indicator = findViewById(R.id.indicator);
+        updateDisplay(checkIsActive);
 
         // Set click listeners
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: Start");
+                Log.d(TAG, "onClick: Activate");
                 activate(v);
             }
         });
@@ -94,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: Stop");
+                Log.d(TAG, "onClick: Deactivate");
                 deactivate(v);
             }
         });
@@ -107,9 +111,10 @@ public class MainActivity extends AppCompatActivity {
         // Set alarm and repeat once a day
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
-        textView.setText(getString(R.string.isActive, ""));
 
-        Log.d(TAG, "activate: activated");
+        updateDisplay(true);
+
+        Log.d(TAG, "activate: Activated at " + DateFormat.getDateTimeInstance().format(time.getTime()));
     }
 
     private void deactivate(View v) {
@@ -119,8 +124,17 @@ public class MainActivity extends AppCompatActivity {
         // Cancel alarm
         alarmMgr.cancel(alarmIntent);
         alarmIntent.cancel();
-        textView.setText(getString(R.string.isActive, "not "));
 
-        Log.d(TAG, "deactivate: deactivated");
+        updateDisplay(false);
+
+        Log.d(TAG, "deactivate: Deactivated");
+    }
+
+    private void updateDisplay(boolean checkIsActive) {
+        textView.setText(getString(R.string.isActive, (checkIsActive) ? "" : "not "));
+        indicator.setText(textView.getText());
+        int color = getColor((checkIsActive) ? R.color.active : R.color.inactive);
+        indicator.setTextColor(color);
+        indicator.setBackgroundColor(color);
     }
 }
