@@ -1,8 +1,10 @@
 package com.example.dbdelay;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -44,20 +46,26 @@ public class RequestHandler extends BroadcastReceiver {
     }
 
     private class MyResponseListener implements Response.Listener<String> {
+        // Class of the articles
         private static final String CLASS = "incident";
+        // Displayed in the notification if there are no notices
+        private static final String NO_NOTICE_STRING = "Keine relevanten Meldungen vorhanden";
 
+        // Keywords to look for
         ArrayList<String> keywords = new ArrayList<>(Arrays.asList("Heidelberg",
                 "Kirchheim", "Rohrbach", "St. Ilgen", "Sankt Ilgen", "Sandhausen",
                 "Wiesloch", "Walldorf", "Rot", "St. Leon", "Sankt Leon", "Malsch",
                 "Bad Schönborn", "Bad Schoenborn", "Kronau", "Ubstadt-Weiher",
                 "Bruchsal", "Karlsruhe"));
 
+        // Store a reference to the context
         Context context;
 
         private MyResponseListener(Context context) {
             this.context = context;
         }
 
+        // Test if the article contains a keyword
         private boolean isRelevant(Element article) {
             for(String keyword : keywords)
                 if(article.text().toLowerCase().contains(keyword.toLowerCase()))
@@ -65,6 +73,7 @@ public class RequestHandler extends BroadcastReceiver {
             return false;
         }
 
+        // Response is in ISO charset
         private String fixEncodingUnicode(String response) {
             return new String(response.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
         }
@@ -81,7 +90,8 @@ public class RequestHandler extends BroadcastReceiver {
             for(Element article : articles) {
                 if(isRelevant(article)) {
                     String text = article.text();
-                    contentText.append(text.substring(0, 80)).append("\n\n");
+                    String toAdd = (text.length() >= 80) ? text.substring(0, 80) : text;
+                    contentText.append(toAdd).append("\n\n");
                 }
             }
             return contentText.toString();
@@ -98,16 +108,26 @@ public class RequestHandler extends BroadcastReceiver {
 
             // Filter articles
             String contentText = getContentText(articles);
+            if(contentText.isEmpty())
+                contentText = NO_NOTICE_STRING;
+
+            // Notification tap intent
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+                    browserIntent, 0);
+
+            String shortContent = (contentText.length() >= 50) ? contentText.substring(0, 50) : contentText;
 
             // Create the notification
             String CHANNEL_ID = MainActivity.getChannelId();
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_icon)
                     .setContentTitle(doc.title())
-                    .setContentText(contentText.substring(0, 50))
+                    .setContentText(shortContent)
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(contentText))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent);
 
             // Send the notification
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
