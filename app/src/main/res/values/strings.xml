@@ -3,4 +3,5 @@
     <string name="startButton">Activate</string>
     <string name="stopButton">Deactivate</string>
     <string name="isActive">Check is %1$sactive</string>
+    <string name="TestButton">Test</string>
 </resources>

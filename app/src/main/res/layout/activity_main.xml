@@ -76,6 +76,21 @@
                 android:text="@string/stopButton"
                 android:textColor="@color/font"
                 android:textSize="@dimen/buttonFontSize" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/testButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/button"
+                android:text="@string/TestButton"
+                android:textColor="@color/font"
+                android:textSize="@dimen/buttonFontSize" />
         </TableRow>
 
     </TableLayout>

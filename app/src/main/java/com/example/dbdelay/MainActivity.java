@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // Get buttons
         Button startButton = findViewById(R.id.startButton);
         Button stopButton = findViewById(R.id.stopButton);
+        Button testButton = findViewById(R.id.testButton);
 
         // Create text and indicator
         boolean checkIsActive = checkIsActive();
@@ -100,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Deactivate");
                 deactivate(v);
+            }
+        });
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                test(v);
             }
         });
     }
@@ -136,5 +143,11 @@ public class MainActivity extends AppCompatActivity {
         int color = getColor((checkIsActive) ? R.color.active : R.color.inactive);
         indicator.setTextColor(color);
         indicator.setBackgroundColor(color);
+    }
+
+    private void test(View v) {
+        Log.d(TAG, "test: Test request");
+        Intent checkIntent = new Intent(v.getContext(), RequestHandler.class);
+        sendBroadcast(checkIntent);
     }
 }
