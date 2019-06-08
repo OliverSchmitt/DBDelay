@@ -128,7 +128,7 @@ public class RequestHandler extends BroadcastReceiver {
             String contentText = getContentText(articles);
             if(contentText.isEmpty())
                 contentText = NO_NOTICE_STRING;
-            contentText += "\n\n" + StringUtil.join(getRelevantKeywords(articles), "\n");
+            contentText = String.join("\n", getRelevantKeywords(articles)) + "\n\n" + contentText;
 
             // Notification tap intent
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));

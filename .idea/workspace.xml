@@ -45,7 +45,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e82fe74-5d30-446b-953e-db0dd3d38c85" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dbdelay/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dbdelay/RequestHandler.java" afterDir="false" />
     </list>
@@ -67,7 +66,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dbdelay/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
+            <state relative-caret-position="2025">
               <caret line="150" column="22" selection-start-line="150" selection-start-column="22" selection-end-line="150" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -108,11 +107,29 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dbdelay/RequestHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
+            <state relative-caret-position="315">
               <caret line="60" column="39" selection-start-line="60" selection-start-column="39" selection-end-line="60" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.12.1/1ec738903bf781d7218455e314c6dc9831a2f9a6/jsoup-1.12.1-sources.jar!/org/jsoup/nodes/Element.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="194">
+              <caret line="1058" selection-start-line="1058" selection-end-line="1058" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.12.1/1ec738903bf781d7218455e314c6dc9831a2f9a6/jsoup-1.12.1-sources.jar!/org/jsoup/internal/StringUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="194">
+              <caret line="242" selection-start-line="242" selection-end-line="242" />
             </state>
           </provider>
         </entry>
@@ -169,6 +186,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -180,9 +199,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -229,7 +246,7 @@
       <option name="PM_INSTALL_OPTIONS" value="" />
       <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
-      <option name="MODE" value="do_nothing" />
+      <option name="MODE" value="default_activity" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
@@ -315,7 +332,7 @@
       <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.49834803" weight="0.32968238" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5065862" side_tool="true" weight="0.27382258" />
       <window_info anchor="bottom" id="Version Control" order="6" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49341384" visible="true" weight="0.33296824" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49341384" weight="0.33296824" />
       <window_info anchor="bottom" id="Find" order="8" sideWeight="0.49944934" weight="0.32968238" />
       <window_info anchor="bottom" id="Android Profiler" order="9" sideWeight="0.49889868" weight="0.32968238" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
@@ -330,12 +347,38 @@
   <component name="XDebuggerManager">
     <watches-manager>
       <configuration name="app">
-        <watch expression="DateFormat.getDateTimeInstance().format(time)" language="JAVA" custom="android.text.format.DateFormat" />
+        <watch expression="article.text().toLowerCase()" language="JAVA" custom="android.text.format.DateFormat" />
+        <watch expression="StringUtil.join(getRelevantKeywords(articles), &quot;\n&quot;)" language="JAVA" custom="com.sun.xml.internal.ws.util.StringUtils" />
+        <watch expression="StringUtils.join(getRelevantKeywords(articles), &quot;\n&quot;)" language="JAVA" custom="com.sun.xml.internal.ws.util.StringUtils" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>StringUtils.join(getRelevantKeywords(articles), &quot;\n&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>com.sun.xml.internal.ws.util.StringUtils</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>StringUtil.join(getRelevantKeywords(articles), &quot;\n&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>com.sun.xml.internal.ws.util.StringUtils</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>StringUtils</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>com.sun.xml.internal.ws.util.StringUtils</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>article.text().toLowerCase()</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>android.text.format.DateFormat</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>DateFormat.getDateTimeInstance().format(time)</expression-string>
         <language-id>JAVA</language-id>
@@ -370,21 +413,6 @@
         <expression-string>DateFormat.format(&quot;dd-MM-yyyy hh:mm:ss&quot;, calendar).toString();</expression-string>
         <language-id>JAVA</language-id>
         <custom-info>android.text.format.DateFormat</custom-info>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>PendingIntent.getBroadcast(this, 0, new Intent(), PendingIntent.FLAG_NO_CREATE)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>PendingIntent.getBroadcast(this, 0, intent,                 PendingIntent.FLAG_NO_CREATE</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>doc</expression-string>
-        <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
@@ -492,7 +520,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dbdelay/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
+        <state relative-caret-position="2025">
           <caret line="150" column="22" selection-start-line="150" selection-start-column="22" selection-end-line="150" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -523,9 +551,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.12.1/1ec738903bf781d7218455e314c6dc9831a2f9a6/jsoup-1.12.1-sources.jar!/org/jsoup/internal/StringUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="242" selection-start-line="242" selection-end-line="242" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.12.1/1ec738903bf781d7218455e314c6dc9831a2f9a6/jsoup-1.12.1-sources.jar!/org/jsoup/nodes/Element.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="1058" selection-start-line="1058" selection-end-line="1058" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dbdelay/RequestHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
+        <state relative-caret-position="315">
           <caret line="60" column="39" selection-start-line="60" selection-start-column="39" selection-end-line="60" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
