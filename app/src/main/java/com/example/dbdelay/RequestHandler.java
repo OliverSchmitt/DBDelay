@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.jsoup.Jsoup;
+import org.jsoup.internal.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -73,6 +75,22 @@ public class RequestHandler extends BroadcastReceiver {
             return false;
         }
 
+        private ArrayList<String> getRelevantKeywords(Element article) {
+            ArrayList<String> relevantKeywords = new ArrayList<>();
+            for(String keyword : keywords)
+                if(article.text().toLowerCase().contains(keyword.toLowerCase()))
+                    relevantKeywords.add(keyword);
+            return relevantKeywords;
+        }
+
+        private ArrayList<String> getRelevantKeywords(ArrayList<Element> articles) {
+            ArrayList<String> relevantKeywords = new ArrayList<>();
+            for(Element article : articles)
+                if(isRelevant(article))
+                    relevantKeywords.addAll(getRelevantKeywords((article)));
+            return relevantKeywords;
+        }
+
         // Response is in ISO charset
         private String fixEncodingUnicode(String response) {
             return new String(response.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
@@ -110,6 +128,7 @@ public class RequestHandler extends BroadcastReceiver {
             String contentText = getContentText(articles);
             if(contentText.isEmpty())
                 contentText = NO_NOTICE_STRING;
+            contentText += "\n\n" + StringUtil.join(getRelevantKeywords(articles), "\n");
 
             // Notification tap intent
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
